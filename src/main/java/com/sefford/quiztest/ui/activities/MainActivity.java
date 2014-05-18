@@ -41,6 +41,11 @@ public class MainActivity extends Activity implements Handler.Callback {
     private static final int MSG_INCORRECT = 0x101;
     private static final int MSG_FETCH = 0x10;
     private static final int MAX_QUESTIONS = 10;
+    public static final int TRANSITION_SOLUTION_DURATION = 240;
+    public static final int SOLUTION_TRANSITION_DURATION = TRANSITION_SOLUTION_DURATION;
+    public static final int SHOW_NEXT_DELAY = 1240;
+    public static final int QUESTION_ANIMATION_DURATION = 360;
+    public static final int EDGE_LAG_SIMULATOR = 2000;
 
     private Handler handler = new Handler(this);
 
@@ -58,14 +63,14 @@ public class MainActivity extends Activity implements Handler.Callback {
         @Override
         public void onClick(View v) {
             TransitionDrawable drawable = (TransitionDrawable) v.getBackground();
-            drawable.startTransition(240);
+            drawable.startTransition(TRANSITION_SOLUTION_DURATION);
             Boolean response = (Boolean) v.getTag();
             if (!response) {
                 Vibrator vibrator = (Vibrator) getBaseContext().getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(240);
+                vibrator.vibrate(TRANSITION_SOLUTION_DURATION);
                 showCorrectAnswer();
             }
-            handler.sendEmptyMessageDelayed(response ? MSG_CORRECT : MSG_INCORRECT, 1240);
+            handler.sendEmptyMessageDelayed(response ? MSG_CORRECT : MSG_INCORRECT, SHOW_NEXT_DELAY);
         }
     };
 
@@ -93,7 +98,7 @@ public class MainActivity extends Activity implements Handler.Callback {
             updateScore();
             rlQuestion.setAlpha(1);
         } else {
-            handler.sendEmptyMessageDelayed(MSG_FETCH, 2000);
+            handler.sendEmptyMessageDelayed(MSG_FETCH, EDGE_LAG_SIMULATOR);
         }
     }
 
@@ -137,7 +142,7 @@ public class MainActivity extends Activity implements Handler.Callback {
         for (int i = 0; i < llAnswers.getChildCount(); i++) {
             if ((Boolean) llAnswers.getChildAt(i).getTag()) {
                 TransitionDrawable drawable = (TransitionDrawable) llAnswers.getChildAt(i).getBackground();
-                drawable.startTransition(240);
+                drawable.startTransition(SOLUTION_TRANSITION_DURATION);
             }
         }
     }
@@ -207,14 +212,14 @@ public class MainActivity extends Activity implements Handler.Callback {
 
     private Animator prepareProgressAnimation(View targetView, int targetValue) {
         Animator animation = ObjectAnimator.ofInt(targetView, "progress", pbProgress.getProgress(), targetValue);
-        animation.setDuration(360);
+        animation.setDuration(QUESTION_ANIMATION_DURATION);
         animation.setInterpolator(new AccelerateDecelerateInterpolator());
         return animation;
     }
 
     private Animator prepareFadeCurrentQuestion(final View targetView) {
         Animator animation = ObjectAnimator.ofFloat(targetView, View.ALPHA, targetView.getAlpha(), 0);
-        animation.setDuration(360);
+        animation.setDuration(QUESTION_ANIMATION_DURATION);
         animation.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
