@@ -3,11 +3,13 @@ package com.sefford.quiztest.ui.activities;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,6 +61,8 @@ public class MainActivity extends Activity implements Handler.Callback {
             drawable.startTransition(240);
             Boolean response = (Boolean) v.getTag();
             if (!response) {
+                Vibrator vibrator = (Vibrator) getBaseContext().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(240);
                 showCorrectAnswer();
             }
             handler.sendEmptyMessageDelayed(response ? MSG_CORRECT : MSG_INCORRECT, 1240);
