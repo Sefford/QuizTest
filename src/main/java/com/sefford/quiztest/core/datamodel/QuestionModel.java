@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Model for a group of questions
  *
- * @autho Saul Diaz <saul@feverup.com>
+ * @author Saul Diaz <sefford@gmail.com>
  */
 public class QuestionModel {
 

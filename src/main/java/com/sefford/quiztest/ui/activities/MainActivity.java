@@ -35,6 +35,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Saul Diaz <sefford@gmail.com>
+ */
 public class MainActivity extends Activity implements Handler.Callback {
 
     private static final int MSG_CORRECT = 0x1010;

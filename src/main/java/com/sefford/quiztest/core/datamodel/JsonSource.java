@@ -3,6 +3,9 @@ package com.sefford.quiztest.core.datamodel;
 /**
  * Json Source for a couple of questions. The data was kindly obtained from
  * WWW.TRIVIADATABASE.COM.
+ * <p/>
+ *
+ * @author Saul Diaz <sefford@gmail.com>
  */
 public class JsonSource {
 
